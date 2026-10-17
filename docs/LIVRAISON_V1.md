@@ -9,10 +9,10 @@ Branche : `feat/portfolio-v1`. Version développée et vérifiée localement ; a
 - Accueil, présentation personnelle, introduction du manifeste, domaines explorés, parcours et collaboration.
 - Navigation responsive, menu mobile défilable sur écran court, fermeture sur Échap/clic extérieur/départ du focus, lien d'évitement et focus visible.
 - Bascule FR/EN conservant l'ancre, textes et métadonnées traduits, favicon et images Open Graph PNG.
-- Données éditoriales séparées du JSX. Les trois initiatives non validées restent `published: false`, `stage: null` et absentes des pages. Contacts configurables, vides par défaut.
+- Données éditoriales séparées du JSX. Les trois initiatives non validées restent `published: false`, `stage: null` et absentes des pages. Contacts configurables ; l'email autorisé lors de la reprise est détaillé ci-dessous.
 - Préparation Vercel, sans déploiement : déploiements Git automatiques désactivés, indexation désactivée par défaut, aucune URL canonique de production inventée.
 
-## Vérifications exécutées
+## Vérifications initiales exécutées
 
 Environnement : Windows, Node.js 24.19.0, npm 11.21.1, Next.js 16.4.2, ESLint 10.13.0. npm a été exécuté au moyen du lanceur pnpm fourni par l'environnement Codex ; les scripts du dépôt sont les commandes usuelles ci-dessous.
 
@@ -41,6 +41,16 @@ Tests navigateur effectués avec Playwright et Microsoft Edge, sur la compilatio
 
 Les captures et le script de contrôle navigateur propres à cet environnement restent dans les dossiers locaux ignorés `artifacts/` et `.tools/`. Aucun test sur appareil physique ni audit exhaustif avec lecteur d'écran n'est revendiqué.
 
+## Suivi — ajout du contact autorisé
+
+Francis a explicitement autorisé l'affichage de `francismoutima@gmail.com`. Le lien `mailto:francismoutima@gmail.com` est ajouté à la section collaboration avec des libellés français et anglais. Les autres contacts restent absents, et les projets non validés restent masqués.
+
+Les 13 tests consignés ci-dessus correspondent à la livraison initiale. Après cette modification, la réinstallation complète via `npm ci`, le lint, le typage, les **14 tests** et la compilation de production ont réussi. Les exécutables locaux des scripts ont été lancés directement avec Node pour les contrôles de cette reprise ; les versions du verrou npm n'ont pas changé.
+
+Les contrôles Edge/Playwright ont été relancés en FR/EN à 320, 390, 768 et 1440 px ainsi qu'en paysage 568 × 320 px : aucun débordement, navigation et changement de langue fonctionnels, un seul contact affiché avec la destination exacte `mailto:francismoutima@gmail.com`. Le message d'attente des coordonnées n'apparaît plus et les projets brouillons restent absents. Les captures du contact ont été inspectées. Ces contrôles vérifient l'affichage et la destination du lien, sans envoi d'email ni validation de sa réception.
+
+Cette mise à jour ne publie pas le site et n'autorise aucun déploiement public.
+
 ## Avertissements et limites connus
 
 - Sans `SITE_URL`, Next.js signale l'absence de `metadataBase` et utilise localhost pour résoudre les images de partage locales. Configurer l'origine HTTPS réelle avant la publication, puis reconstruire. Le site reste `noindex` tant que le lancement n'est pas autorisé.
@@ -50,6 +60,6 @@ Les captures et le script de contrôle navigateur propres à cet environnement r
 
 ## Avant publication
 
-Valider ensemble l'apparence et les textes FR/EN. Fournir et autoriser au moins un contact public. Confirmer les descriptions et statuts de chaque projet avant de les afficher ; les projets peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
+Valider ensemble l'apparence et les textes FR/EN. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts de chaque projet avant de les afficher ; les projets peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
 
 La procédure locale et les étapes futures Vercel sont dans [README.md](../README.md). La liste de validation est dans [VALIDATION_AVANT_PUBLICATION.md](VALIDATION_AVANT_PUBLICATION.md). Aucune publication, fusion ou activation des déploiements automatiques n'a été effectuée.

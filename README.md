@@ -2,7 +2,7 @@
 
 Première version du portfolio personnel et entrepreneurial de Francis : présentation, manifeste, projets, parcours et collaboration, en français et en anglais. Direction « Premium & International », bleu nuit, or champagne et ivoire, avec Manrope et Inter hébergées par l'application.
 
-**Version à valider localement. Aucune publication publique n'est autorisée à ce stade.** Les contacts et fiches de projets attendent une validation éditoriale ; la liste est dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
+**Version à valider localement. Aucune publication publique n'est autorisée à ce stade.** Francis a autorisé l'affichage de son email `francismoutima@gmail.com`, désormais proposé dans les deux langues. Les fiches de projets et les autres éléments éditoriaux attendent leur validation ; la liste est dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
 
 Le [compte rendu de livraison V1](docs/LIVRAISON_V1.md) détaille les tests exécutés, les vérifications navigateur et les avertissements connus.
 
@@ -62,6 +62,8 @@ Lire [AGENTS.md](AGENTS.md) et [CONTENU_INITIAL.md](docs/CONTENU_INITIAL.md) ava
 Les initiatives Between, Parcelle pour tous et CODAB restent des brouillons : `published: false`, statut `stage: null` tant qu'il n'est pas confirmé. Pour publier une fiche, obtenir l'accord de Francis sur son titre, son statut réel, son résumé et sa problématique FR/EN, son périmètre public et ses éventuels liens. Renseigner seulement ces informations validées, puis activer `published`. Le filtre exclut les fiches sans statut reconnu ou sans traduction complète.
 
 Les contacts du tableau `contacts` doivent être explicitement approuvés avant d'être affichés. Renseigner `id`, `kind` (`email`, `linkedin` ou `whatsapp`), `label.fr`, `label.en` et `href`, puis définir `approved: true` après accord. Les destinations acceptées sont un email `mailto:`, un profil HTTPS LinkedIn `/in/…` ou un lien HTTPS `wa.me/…` avec numéro international. Tant qu'aucun contact n'est approuvé, la section collaboration affiche un message informatif ; elle n'envoie aucun message et ne présente aucune coordonnée inventée.
+
+Le contact actuellement approuvé est `francismoutima@gmail.com`, avec la destination `mailto:francismoutima@gmail.com` et des libellés FR/EN. Ce lien permet de préparer un email dans l'application de messagerie du visiteur ; le site n'envoie aucun message lui-même.
 
 Le manifeste affiche uniquement l'introduction disponible. La version longue, les diplômes, dates, postes, réalisations, métriques et témoignages attendent leurs validations. Un brouillon masqué sur le site n'est pas confidentiel s'il est enregistré dans ce dépôt public : ne jamais y ajouter de notes sensibles ou de coordonnées privées.
 

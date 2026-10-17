@@ -451,7 +451,18 @@ export type PublicContact = {
 };
 
 /** Add a contact only after the owner explicitly approves publishing it. */
-export const contacts: readonly Contact[] = [];
+export const contacts: readonly Contact[] = [
+  {
+    id: "public-email",
+    kind: "email",
+    approved: true,
+    label: {
+      fr: "francismoutima@gmail.com",
+      en: "francismoutima@gmail.com",
+    },
+    href: "mailto:francismoutima@gmail.com",
+  },
+];
 
 function isContactDestination(contact: Contact): boolean {
   if (contact.kind === "email") {

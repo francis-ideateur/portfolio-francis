@@ -79,7 +79,7 @@ test("both supported languages have complete, matching content and stage labels"
   }
 });
 
-test("unconfirmed initiatives and contact details are absent from the public V1", () => {
+test("unconfirmed initiatives are absent from the public V1", () => {
   assert.deepEqual(
     projects.map(({ id }) => id),
     ["between", "parcelle-pour-tous", "codab"],
@@ -94,10 +94,24 @@ test("unconfirmed initiatives and contact details are absent from the public V1"
       );
     }
   }
-  assert.deepEqual(contacts, []);
   for (const locale of locales) {
     assert.deepEqual(getPublishedProjects(locale), []);
-    assert.deepEqual(getPublicContacts(locale), []);
+  }
+});
+
+test("only the email authorized by Francis is public in both languages", () => {
+  assert.equal(contacts.length, 1);
+  assert.equal(contacts[0].approved, true);
+  for (const locale of locales) {
+    assert.deepEqual(getPublicContacts(locale), [
+      {
+        id: "public-email",
+        kind: "email",
+        label: "francismoutima@gmail.com",
+        href: "mailto:francismoutima@gmail.com",
+      },
+    ]);
+    assert.deepEqual(getPublicContacts(locale, []), []);
   }
 });
 

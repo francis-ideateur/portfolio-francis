@@ -6,7 +6,7 @@ Cette liste distingue les informations encore à approuver des contrôles techni
 
 | Élément | État de la V1 | Décision attendue |
 | --- | --- | --- |
-| Contact public | Aucun contact affiché sans approbation | Autoriser au moins un email, profil LinkedIn ou lien WhatsApp précis et le tester |
+| Contact public | Email `francismoutima@gmail.com` explicitement autorisé par Francis, affiché en FR/EN | Vérifier le lien `mailto:francismoutima@gmail.com` avant lancement ; tout autre contact nécessite une approbation |
 | Between | Brouillon, non publié, statut inconnu | Confirmer le statut réel, les textes FR/EN, les détails publics et les liens éventuels |
 | Parcelle pour tous | Brouillon, non publié, statut inconnu | Confirmer le statut réel, les textes FR/EN, les détails publics et les liens éventuels |
 | CODAB | Brouillon, non publié, statut inconnu | Confirmer la mission publique et le statut ; aucun titre de société constituée n'est présumé |
@@ -17,12 +17,13 @@ Cette liste distingue les informations encore à approuver des contrôles techni
 | Adresse du site | Aucune URL publique présumée | Choisir le domaine ou accepter l'adresse Vercel effectivement attribuée |
 | Forum et QR code | Aucune participation ni date inventée | Confirmer l'échéance utile ; produire le QR code après vérification de l'URL finale |
 
-Les projets et le manifeste long peuvent rester non publiés. En revanche, au moins un contact public confirmé est nécessaire pour satisfaire le critère de contact du MVP avant lancement.
+Les projets et le manifeste long peuvent rester non publiés. Le canal de contact approuvé est l'email `francismoutima@gmail.com`. Les contrôles navigateur portent sur l'affichage et la destination du lien, sans envoi de message ni validation de sa réception.
 
 ## Accord éditorial et publication
 
 - [ ] Francis a relu les versions française et anglaise et approuvé les informations rendues publiques.
-- [ ] Un canal de contact autorisé fonctionne, avec libellés FR/EN et destination exacte.
+- [x] Francis a autorisé la publication de l'email `francismoutima@gmail.com` comme contact public.
+- [x] Le lien e-mail autorisé est affiché en FR/EN avec la destination exacte, vérifiée dans le navigateur local ; aucun email de test n'a été envoyé.
 - [ ] Chaque projet publié a un statut confirmé et un contenu public approuvé ; les autres restent exclus.
 - [ ] Les éventuels nouveaux éléments de parcours sont justifiés.
 - [ ] Le dépôt et les ressources publiques ne contiennent aucune donnée privée ou confidentielle. `published: false` ne rend pas le code d'un dépôt public privé.
