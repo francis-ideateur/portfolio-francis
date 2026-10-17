@@ -1,0 +1,55 @@
+# Livraison V1 — 17 octobre 2026
+
+Branche : `feat/portfolio-v1`. Version développée et vérifiée localement ; aucun déploiement public effectué.
+
+## Fonctionnalités livrées
+
+- Next.js App Router, TypeScript strict, Tailwind CSS ; `/` redirige vers `/fr`, version anglaise sur `/en`.
+- Identité navy, or champagne et ivoire ; Manrope et Inter hébergées localement ; monogramme graphique temporaire, sans photographie inventée.
+- Accueil, présentation personnelle, introduction du manifeste, domaines explorés, parcours et collaboration.
+- Navigation responsive, menu mobile défilable sur écran court, fermeture sur Échap/clic extérieur/départ du focus, lien d'évitement et focus visible.
+- Bascule FR/EN conservant l'ancre, textes et métadonnées traduits, favicon et images Open Graph PNG.
+- Données éditoriales séparées du JSX. Les trois initiatives non validées restent `published: false`, `stage: null` et absentes des pages. Contacts configurables, vides par défaut.
+- Préparation Vercel, sans déploiement : déploiements Git automatiques désactivés, indexation désactivée par défaut, aucune URL canonique de production inventée.
+
+## Vérifications exécutées
+
+Environnement : Windows, Node.js 24.19.0, npm 11.21.1, Next.js 16.4.2, ESLint 10.13.0. npm a été exécuté au moyen du lanceur pnpm fourni par l'environnement Codex ; les scripts du dépôt sont les commandes usuelles ci-dessous.
+
+| Commande | Résultat |
+| --- | --- |
+| `npm install` | Dépendances installées ; `package-lock.json` versionné |
+| `npm run lint` | Réussi, aucune erreur ni avertissement de lint |
+| `npm run typecheck` | Réussi, génération des types Next.js et TypeScript strict |
+| `npm test` | 13 tests réussis |
+| `npm run build` | Réussi, pages FR/EN précompilées et route PNG Open Graph fonctionnelle |
+| `npm ci --dry-run --ignore-scripts --no-audit --no-fund` | Résolution du verrou réussie ; ceci n'est pas une réinstallation complète |
+| `npm audit --omit=dev` | Aucune vulnérabilité signalée dans les dépendances de production au moment du contrôle |
+| `git diff --check` | Réussi |
+
+Les tests unitaires couvrent les traductions, les statuts, l'exclusion des brouillons, les destinations de contact, l'approbation des coordonnées, les origines canoniques et les règles d'indexation.
+
+Tests navigateur effectués avec Playwright et Microsoft Edge, sur la compilation de production locale :
+
+- FR et EN aux largeurs 320, 390, 768 et 1440 px : aucun débordement horizontal.
+- Menu ouvert/fermé, Échap et restitution du focus, fermeture en quittant le header au clavier, liens d'ancre et changement de langue : réussis.
+- Écran paysage 568 × 320 px : menu défilable et lien de collaboration accessible.
+- Langue du document HTML mise à jour après bascule, lien d'évitement vers le contenu, redirection racine et réponses 404 : réussis.
+- Images de partage PNG, ressources des pages et ancres vérifiées ; projets brouillons et contacts non approuvés absents du rendu.
+- Aucune erreur JavaScript bloquante ; les requêtes volontaires vers des pages absentes produisent les erreurs 404 attendues.
+- Captures desktop/mobile inspectées visuellement. Contrastes des principales paires texte/fond vérifiés ; opacité des numéros de section retirée pour conserver leur contraste sur fond sombre.
+
+Les captures et le script de contrôle navigateur propres à cet environnement restent dans les dossiers locaux ignorés `artifacts/` et `.tools/`. Aucun test sur appareil physique ni audit exhaustif avec lecteur d'écran n'est revendiqué.
+
+## Avertissements et limites connus
+
+- Sans `SITE_URL`, Next.js signale l'absence de `metadataBase` et utilise localhost pour résoudre les images de partage locales. Configurer l'origine HTTPS réelle avant la publication, puis reconstruire. Le site reste `noindex` tant que le lancement n'est pas autorisé.
+- Next.js signale l'utilisation de `experimental.globalNotFound`, employé pour la page 404 globale avec le layout multilingue.
+- npm signale des plages de peer dependencies encore limitées à ESLint 9 dans certains plugins inclus par Next.js. Installation, résolution du verrou et lint fonctionnent avec ESLint 10 ; [Next.js documente cette compatibilité](https://nextjs.org/docs/app/api-reference/config/eslint).
+- L'audit complet signale cinq entrées de sévérité haute dans une même chaîne de dépendances de développement : plugin ESLint Next → fast-glob → micromatch → braces. L'alerte concerne un déni de service par motifs profondément imbriqués ; [l'avis amont n'indique pas encore de version corrigée](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm). Aucun downgrade automatique du framework n'a été appliqué. Cette chaîne n'appartient pas aux dépendances de production.
+
+## Avant publication
+
+Valider ensemble l'apparence et les textes FR/EN. Fournir et autoriser au moins un contact public. Confirmer les descriptions et statuts de chaque projet avant de les afficher ; les projets peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
+
+La procédure locale et les étapes futures Vercel sont dans [README.md](../README.md). La liste de validation est dans [VALIDATION_AVANT_PUBLICATION.md](VALIDATION_AVANT_PUBLICATION.md). Aucune publication, fusion ou activation des déploiements automatiques n'a été effectuée.

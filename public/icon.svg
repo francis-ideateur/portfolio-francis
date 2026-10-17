@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="18" fill="#0B1426"/>
+  <path d="M13 70h70" stroke="#C5A46D" stroke-width="2"/>
+  <text x="48" y="57" text-anchor="middle" fill="#F7F5F0" font-family="Arial, sans-serif" font-weight="700" font-size="28">MOF<tspan fill="#C5A46D">.</tspan></text>
+</svg>

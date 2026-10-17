@@ -145,5 +145,10 @@ vite.config.ts.timestamp-*
 # Astro generated types
 .astro/
 
+# Local verification tools and artifacts
+.tools/
+artifacts/
+.vercel/
+
 # Turbo Repo
 .turbo
