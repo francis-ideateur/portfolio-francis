@@ -2,9 +2,11 @@ import {
   content,
   getPublishedProjects,
   getPublicContacts,
+  projectUi,
   type Locale,
 } from "@/content/portfolio";
 import { Header } from "./header";
+import Link from "next/link";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
@@ -178,13 +180,30 @@ export function Portfolio({ locale }: { locale: Locale }) {
               <div className="project-grid">
                 {projects.map((project) => (
                   <article className="project-card" key={project.id}>
-                    <span className="stage-label">{project.stageLabel}</span>
+                    {project.details && (
+                      <p className="project-category eyebrow">
+                        {project.details.category}
+                      </p>
+                    )}
+                    <span className="stage-label">
+                      {project.stageLabel}
+                      {project.details && ` — ${project.details.statusNote}`}
+                    </span>
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                     <p>{project.problem}</p>
+                    {project.details && (
+                      <Link
+                        className="text-link"
+                        href={`/${locale}/projects/${project.id}`}
+                      >
+                        {projectUi[locale].readMore}
+                        <Arrow />
+                      </Link>
+                    )}
                     {project.href && (
                       <a className="text-link" href={project.href}>
-                        {project.title}
+                        {projectUi[locale].externalLink}
                         <Arrow diagonal />
                       </a>
                     )}

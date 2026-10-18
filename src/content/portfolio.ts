@@ -1,3 +1,5 @@
+import { venique } from "./venique";
+
 /**
  * Public copy is sourced from docs/CONTENU_INITIAL.md.
  * Keep unconfirmed project information out of the rendered page.
@@ -329,10 +331,48 @@ export const projectStageLabels: Record<
   },
 };
 
+export type ProjectDetail = {
+  category: string;
+  statusNote: string;
+  sections: readonly {
+    id: string;
+    title: string;
+    paragraphs: readonly string[];
+    bullets?: readonly string[];
+  }[];
+};
+
+export const projectUi: Record<
+  Locale,
+  {
+    readMore: string;
+    backToProjects: string;
+    contents: string;
+    discuss: string;
+    externalLink: string;
+  }
+> = {
+  fr: {
+    readMore: "Découvrir le projet",
+    backToProjects: "Retour aux projets",
+    contents: "Dans cette fiche",
+    discuss: "Échanger sur ce projet",
+    externalLink: "Visiter le site du projet",
+  },
+  en: {
+    readMore: "Explore the project",
+    backToProjects: "Back to projects",
+    contents: "On this page",
+    discuss: "Discuss this project",
+    externalLink: "Visit the project website",
+  },
+};
+
 export type ProjectTranslation = {
   title: string;
   summary: string;
   problem: string;
+  details?: ProjectDetail;
 };
 
 export type Project = {
@@ -355,6 +395,7 @@ export type PublishedProject = ProjectTranslation & {
 
 /** Names are already in the repository documentation. No private detail belongs here. */
 export const projects: readonly Project[] = [
+  venique,
   {
     id: "between",
     internalName: "Between",
@@ -382,6 +423,37 @@ function isNonEmpty(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function isSlug(value: string): boolean {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
+function hasCompleteDetails(project: Project): boolean {
+  const details = locales.map(
+    (locale) => project.translations[locale]?.details,
+  );
+  if (details.every((detail) => detail === undefined)) return true;
+  return details.every(
+    (detail) =>
+      detail &&
+      isNonEmpty(detail.category) &&
+      isNonEmpty(detail.statusNote) &&
+      detail.sections.length > 0 &&
+      new Set(detail.sections.map((section) => section.id)).size ===
+        detail.sections.length &&
+      detail.sections.every(
+        (section) =>
+          isSlug(section.id) &&
+          isNonEmpty(section.title) &&
+          section.paragraphs.every(isNonEmpty) &&
+          (section.bullets === undefined ||
+            section.bullets.every(isNonEmpty)) &&
+          (section.paragraphs.length > 0 || (section.bullets?.length ?? 0) > 0),
+      ) &&
+      detail.sections.map((section) => section.id).join(",") ===
+        details[0]?.sections.map((section) => section.id).join(","),
+  );
+}
+
 function isPublicHttpsUrl(value: string): boolean {
   try {
     const url = new URL(value);
@@ -403,7 +475,7 @@ export function getPublishedProjects(
   return source.flatMap((project) => {
     if (
       project.published !== true ||
-      !isNonEmpty(project.id) ||
+      !isSlug(project.id) ||
       !project.stage ||
       !projectStages.some((stage) => stage === project.stage) ||
       !locales.every((language) => {
@@ -415,7 +487,8 @@ export function getPublishedProjects(
           isNonEmpty(translation.problem)
         );
       }) ||
-      (project.href !== undefined && !isPublicHttpsUrl(project.href))
+      (project.href !== undefined && !isPublicHttpsUrl(project.href)) ||
+      !hasCompleteDetails(project)
     ) {
       return [];
     }
@@ -433,6 +506,19 @@ export function getPublishedProjects(
       },
     ];
   });
+}
+
+export function getProjectDetails(
+  locale: Locale,
+  id: string,
+  source: readonly Project[] = projects,
+): (PublishedProject & { details: ProjectDetail }) | undefined {
+  const project = getPublishedProjects(locale, source).find(
+    (item) => item.id === id,
+  );
+  return project?.details
+    ? { ...project, details: project.details }
+    : undefined;
 }
 
 export type Contact = {

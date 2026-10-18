@@ -4,6 +4,7 @@ import {
   content,
   contacts,
   getPublicContacts,
+  getProjectDetails,
   getPublishedProjects,
   isLocale,
   locales,
@@ -12,6 +13,7 @@ import {
   projectStages,
   type Contact,
   type Project,
+  type ProjectDetail,
   type ProjectStage,
 } from "./portfolio";
 
@@ -49,6 +51,40 @@ function approvedContact(overrides: Partial<Contact> = {}): Contact {
   };
 }
 
+function detailedProject(overrides: Partial<Project> = {}): Project {
+  const project = approvedProject();
+  return {
+    ...project,
+    translations: {
+      fr: {
+        ...project.translations.fr!,
+        details: {
+          category: "Catégorie test",
+          statusNote: "Note de statut test",
+          sections: [
+            {
+              id: "overview",
+              title: "Présentation",
+              paragraphs: ["Texte test"],
+            },
+          ],
+        },
+      },
+      en: {
+        ...project.translations.en!,
+        details: {
+          category: "Test category",
+          statusNote: "Test status note",
+          sections: [
+            { id: "overview", title: "Overview", paragraphs: ["Test text"] },
+          ],
+        },
+      },
+    },
+    ...overrides,
+  };
+}
+
 function textPaths(value: unknown, path = ""): string[] {
   if (typeof value === "string") {
     assert.ok(value.trim(), `Missing text at ${path}`);
@@ -79,12 +115,13 @@ test("both supported languages have complete, matching content and stage labels"
   }
 });
 
-test("unconfirmed initiatives are absent from the public V1", () => {
+test("only approved Venique is public while unconfirmed initiatives remain drafts", () => {
+  const drafts = projects.filter(({ id }) => id !== "venique");
   assert.deepEqual(
-    projects.map(({ id }) => id),
+    drafts.map(({ id }) => id),
     ["between", "parcelle-pour-tous", "codab"],
   );
-  for (const project of projects) {
+  for (const project of drafts) {
     assert.equal(project.published, false);
     assert.equal(project.stage, null);
     for (const locale of locales) {
@@ -95,7 +132,129 @@ test("unconfirmed initiatives are absent from the public V1", () => {
     }
   }
   for (const locale of locales) {
-    assert.deepEqual(getPublishedProjects(locale), []);
+    assert.deepEqual(
+      getPublishedProjects(locale).map(({ id }) => id),
+      ["venique"],
+    );
+    for (const project of drafts) {
+      assert.equal(getProjectDetails(locale, project.id), undefined);
+    }
+  }
+});
+
+test("Venique has six complete bilingual sections and its approved development status", () => {
+  const expectedStatus = {
+    fr: "En développement — modules fonctionnels testés localement",
+    en: "In development — functional modules tested locally",
+  };
+  for (const locale of locales) {
+    const project = getProjectDetails(locale, "venique");
+    assert.ok(project);
+    assert.equal(project.stage, "development");
+    assert.equal(
+      `${project.stageLabel} — ${project.details.statusNote}`,
+      expectedStatus[locale],
+    );
+    assert.deepEqual(
+      project.details.sections.map(({ id }) => id),
+      ["overview", "problem", "solution", "progress", "impact", "outlook"],
+    );
+    textPaths(project.details);
+    assert.equal(project.href, undefined, "No unapproved demo destination");
+  }
+  assert.deepEqual(
+    textPaths(getProjectDetails("fr", "venique")!.details).sort(),
+    textPaths(getProjectDetails("en", "venique")!.details).sort(),
+  );
+});
+
+test("direct project lookup cannot expose a draft, unknown stage, or incomplete translation", () => {
+  const complete = detailedProject();
+  const rejected = [
+    detailedProject({ published: false }),
+    detailedProject({ stage: null }),
+    detailedProject({ stage: "unverified" as ProjectStage }),
+    detailedProject({ translations: { fr: complete.translations.fr } }),
+    detailedProject({
+      translations: {
+        ...complete.translations,
+        en: { ...complete.translations.en!, summary: " " },
+      },
+    }),
+    approvedProject(),
+  ];
+  for (const locale of locales) {
+    assert.ok(getProjectDetails(locale, complete.id, [complete]));
+    assert.equal(getProjectDetails(locale, "unknown", [complete]), undefined);
+    for (const project of rejected) {
+      assert.equal(getProjectDetails(locale, project.id, [project]), undefined);
+    }
+  }
+});
+
+test("project routes accept only safe slugs", () => {
+  for (const id of [
+    " ",
+    "Venique",
+    "../venique",
+    "test/project",
+    "test?draft",
+    "test#details",
+    "test--project",
+    "test_project",
+  ]) {
+    const project = detailedProject({ id });
+    for (const locale of locales) {
+      assert.deepEqual(getPublishedProjects(locale, [project]), []);
+      assert.equal(getProjectDetails(locale, id, [project]), undefined);
+    }
+  }
+});
+
+test("partial or empty project details are unavailable in both languages", () => {
+  const complete = detailedProject();
+  const details = complete.translations.en!.details!;
+  const invalidDetails: (ProjectDetail | undefined)[] = [
+    undefined,
+    { ...details, category: " " },
+    { ...details, statusNote: " " },
+    { ...details, sections: [] },
+    {
+      ...details,
+      sections: [{ id: "overview", title: " ", paragraphs: ["Test text"] }],
+    },
+    {
+      ...details,
+      sections: [{ id: "overview", title: "Overview", paragraphs: [] }],
+    },
+    {
+      ...details,
+      sections: [{ id: "overview", title: "Overview", paragraphs: [" "] }],
+    },
+    {
+      ...details,
+      sections: [
+        { id: "overview", title: "Overview", paragraphs: [], bullets: [" "] },
+      ],
+    },
+    { ...details, sections: [{ ...details.sections[0], id: "../overview" }] },
+    { ...details, sections: [details.sections[0], details.sections[0]] },
+    {
+      ...details,
+      sections: [{ ...details.sections[0], id: "different-section" }],
+    },
+  ];
+  for (const invalid of invalidDetails) {
+    const project = detailedProject({
+      translations: {
+        ...complete.translations,
+        en: { ...complete.translations.en!, details: invalid },
+      },
+    });
+    for (const locale of locales) {
+      assert.deepEqual(getPublishedProjects(locale, [project]), []);
+      assert.equal(getProjectDetails(locale, project.id, [project]), undefined);
+    }
   }
 });
 

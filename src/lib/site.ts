@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { isIP } from "node:net";
-import { content, type Locale } from "../content/portfolio";
+import {
+  content,
+  type Locale,
+  type PublishedProject,
+} from "../content/portfolio";
 
 type SiteEnvironment = {
   [key: string]: string | undefined;
@@ -85,5 +89,53 @@ export function getPageMetadata(
       ...(origin ? { url: `${origin}/${locale}` } : {}),
     },
     twitter: { card: "summary_large_image", title, description },
+  };
+}
+
+export function getProjectMetadata(
+  locale: Locale,
+  project: PublishedProject,
+  env: SiteEnvironment = process.env,
+): Metadata {
+  const base = getPageMetadata(locale, env);
+  const origin = getSiteOrigin(env);
+  const path = `/projects/${project.id}`;
+  const title = `${project.title} — MOUTIMA OKA Francis`;
+  const description = project.summary;
+  const image = {
+    url: `/${locale}${path}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: title,
+  };
+  return {
+    ...base,
+    title,
+    description,
+    ...(origin
+      ? {
+          alternates: {
+            canonical: `${origin}/${locale}${path}`,
+            languages: {
+              fr: `${origin}/fr${path}`,
+              en: `${origin}/en${path}`,
+              "x-default": `${origin}/fr${path}`,
+            },
+          },
+        }
+      : {}),
+    openGraph: {
+      ...base.openGraph,
+      title,
+      description,
+      ...(origin ? { url: `${origin}/${locale}${path}` } : {}),
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }

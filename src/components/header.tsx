@@ -11,9 +11,10 @@ type HeaderProps = {
     string
   >;
   common: { menu: string; close: string; language: string };
+  pagePath?: string;
 };
 
-export function Header({ locale, labels, common }: HeaderProps) {
+export function Header({ locale, labels, common, pagePath = "" }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const headerRef = useRef<HTMLElement>(null);
@@ -62,7 +63,7 @@ export function Header({ locale, labels, common }: HeaderProps) {
           }
         >
           {Object.entries(labels).map(([id, label]) => (
-            <a key={id} href={`#${id}`}>
+            <a key={id} href={`${pagePath ? `/${locale}` : ""}#${id}`}>
               {label}
             </a>
           ))}
@@ -76,7 +77,7 @@ export function Header({ locale, labels, common }: HeaderProps) {
               /
             </span>
             <a
-              href={`/${otherLocale}`}
+              href={`/${otherLocale}${pagePath}`}
               hrefLang={otherLocale}
               lang={otherLocale}
               onClick={(event) => {
@@ -90,7 +91,9 @@ export function Header({ locale, labels, common }: HeaderProps) {
                   return;
                 event.preventDefault();
                 setOpen(false);
-                router.push(`/${otherLocale}${window.location.hash}`);
+                router.push(
+                  `/${otherLocale}${pagePath}${window.location.hash}`,
+                );
               }}
             >
               {otherLocale.toUpperCase()}
@@ -122,7 +125,11 @@ export function Header({ locale, labels, common }: HeaderProps) {
         aria-label={locale === "fr" ? "Navigation mobile" : "Mobile navigation"}
       >
         {Object.entries(labels).map(([id, label], index) => (
-          <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>
+          <a
+            key={id}
+            href={`${pagePath ? `/${locale}` : ""}#${id}`}
+            onClick={() => setOpen(false)}
+          >
             <span className="nav-number">0{index + 1}</span>
             {label}
             <span aria-hidden="true">↗</span>

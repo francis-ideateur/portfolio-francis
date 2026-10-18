@@ -51,6 +51,22 @@ Les contrôles Edge/Playwright ont été relancés en FR/EN à 320, 390, 768 et 
 
 Cette mise à jour ne publie pas le site et n'autorise aucun déploiement public.
 
+## Suivi — Venique — 18 octobre 2026
+
+Francis a fourni les contenus publics français et anglais de **Venique**, projet EdTech de gestion scolaire destiné d'abord à la République du Congo. Venique est désormais présenté dans les projets avec `published: true`, `stage: "development"` et le statut « En développement — modules fonctionnels testés localement » / “In development — functional modules tested locally”. Sa carte mène à une fiche détaillée sur `/fr/projects/venique` ou `/en/projects/venique`.
+
+Les textes décrivent le problème, la solution envisagée, l'avancement réel, l'impact recherché et les perspectives. Les modules Django/PostgreSQL et les importations Excel des classes et des matières testés localement sont des faits rapportés par Francis. Aucun test de l'application Venique n'a été exécuté dans le cadre de cette modification du portfolio. Aucun déploiement commercial, usage généralisé, partenariat ou pilote déjà réalisé n'est ajouté au récit.
+
+Les données publiques de Venique sont isolées dans `src/content/venique.ts`. L'accès aux détails dépend de la publication du projet. Between, Parcelle pour tous et CODAB restent des brouillons exclus du rendu. L'email autorisé reste le seul contact public. Le README et la liste de validation tiennent compte des nouvelles pages et des informations approuvées.
+
+**Vérifications de cette reprise : réussies.** Lint sans erreur ni avertissement, génération des types Next.js et vérification TypeScript, **21 tests unitaires** et compilation de production ont réussi. Les exécutables locaux des scripts ont été lancés avec Node ; aucune dépendance ni version du verrou npm n'a changé. Les nouvelles pages FR/EN de Venique sont précompilées. Les avertissements déjà documentés concernant `metadataBase` et `globalNotFound` restent présents.
+
+Les contrôles Edge/Playwright ont été relancés sur les accueils et les fiches Venique à 320, 390, 768 et 1440 px : aucun débordement horizontal. La carte, les six rubriques, le statut exact, le sommaire, les ancres, la bascule FR/EN conservant la fiche et l'ancre, le retour aux projets, l'accès au contact et le lien d'évitement clavier fonctionnent. Les contrôles du menu en paysage 568 × 320 px passent également. Les images Open Graph propres à Venique répondent en PNG et les captures ordinateur/mobile ont été inspectées. Les routes de brouillons, projet inconnu, langue inconnue et image de brouillon renvoient 404. L'indexation reste désactivée et le sitemap vide par défaut. Aucune erreur JavaScript bloquante ni ressource manquante inattendue n'a été relevée.
+
+Une revue indépendante du diff n'a identifié aucun défaut actionnable. Ces vérifications portent sur le portfolio local ; elles ne remplacent pas la relecture éditoriale de Francis ni un contrôle sur smartphone physique. Les captures et résultats restent dans `artifacts/`, ignoré par Git.
+
+Cette mise à jour prépare une relecture locale et n'autorise aucun déploiement public ni fusion.
+
 ## Avertissements et limites connus
 
 - Sans `SITE_URL`, Next.js signale l'absence de `metadataBase` et utilise localhost pour résoudre les images de partage locales. Configurer l'origine HTTPS réelle avant la publication, puis reconstruire. Le site reste `noindex` tant que le lancement n'est pas autorisé.
@@ -60,6 +76,6 @@ Cette mise à jour ne publie pas le site et n'autorise aucun déploiement public
 
 ## Avant publication
 
-Valider ensemble l'apparence et les textes FR/EN. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts de chaque projet avant de les afficher ; les projets peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
+Valider ensemble l'apparence et les textes FR/EN, dont le rendu de la fiche Venique fournie par Francis. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts des autres projets avant de les afficher ; ces trois brouillons peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
 
 La procédure locale et les étapes futures Vercel sont dans [README.md](../README.md). La liste de validation est dans [VALIDATION_AVANT_PUBLICATION.md](VALIDATION_AVANT_PUBLICATION.md). Aucune publication, fusion ou activation des déploiements automatiques n'a été effectuée.
