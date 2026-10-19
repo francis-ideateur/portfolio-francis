@@ -115,11 +115,13 @@ test("both supported languages have complete, matching content and stage labels"
   }
 });
 
-test("only approved Venique is public while unconfirmed initiatives remain drafts", () => {
-  const drafts = projects.filter(({ id }) => id !== "venique");
+test("only approved Venique and Between are public while unconfirmed initiatives remain drafts", () => {
+  const drafts = projects.filter(
+    ({ id }) => !["venique", "between"].includes(id),
+  );
   assert.deepEqual(
     drafts.map(({ id }) => id),
-    ["between", "parcelle-pour-tous", "codab"],
+    ["parcelle-pour-tous", "codab"],
   );
   for (const project of drafts) {
     assert.equal(project.published, false);
@@ -134,12 +136,56 @@ test("only approved Venique is public while unconfirmed initiatives remain draft
   for (const locale of locales) {
     assert.deepEqual(
       getPublishedProjects(locale).map(({ id }) => id),
-      ["venique"],
+      ["venique", "between"],
     );
     for (const project of drafts) {
       assert.equal(getProjectDetails(locale, project.id), undefined);
     }
   }
+});
+
+test("Between describes a locally tested MVP preparing for a pilot in both languages", () => {
+  const expectedStatus = {
+    fr: "MVP fonctionnel testé localement — préparation du pilote",
+    en: "Locally tested functional MVP — preparing for pilot",
+  };
+  for (const locale of locales) {
+    const project = getProjectDetails(locale, "between");
+    assert.ok(project);
+    assert.equal(project.stage, "mvp");
+    assert.equal(
+      `${project.stageLabel} — ${project.details.statusNote}`,
+      expectedStatus[locale],
+    );
+    assert.deepEqual(
+      project.details.sections.map(({ id }) => id),
+      ["overview", "problem", "solution", "progress", "impact", "outlook"],
+    );
+    textPaths(project.details);
+    assert.equal(
+      project.href,
+      undefined,
+      "No unapproved public application URL",
+    );
+    const progress = project.details.sections.find(
+      ({ id }) => id === "progress",
+    )!;
+    const text = progress.paragraphs.join(" ");
+    assert.match(text, /Django/);
+    assert.match(text, /PostgreSQL/);
+    assert.match(
+      text,
+      locale === "fr" ? /données de démonstration/ : /demonstration data/,
+    );
+    assert.match(
+      text,
+      locale === "fr" ? /Aucune adoption publique/ : /No public adoption/,
+    );
+  }
+  assert.deepEqual(
+    textPaths(getProjectDetails("fr", "between")!.details).sort(),
+    textPaths(getProjectDetails("en", "between")!.details).sort(),
+  );
 });
 
 test("Venique has six complete bilingual sections and its approved development status", () => {

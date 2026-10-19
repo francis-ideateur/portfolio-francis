@@ -67,6 +67,22 @@ Une revue indépendante du diff n'a identifié aucun défaut actionnable. Ces v�
 
 Cette mise à jour prépare une relecture locale et n'autorise aucun déploiement public ni fusion.
 
+## Suivi — Between — 19 octobre 2026
+
+Francis a fourni les contenus publics français et anglais de **Between**, projet CivicTech d'information locale destiné d'abord à la République du Congo. Between est désormais présenté aux côtés de Venique avec `published: true`, `stage: "mvp"` et le statut exact « MVP fonctionnel testé localement — préparation du pilote » / “Locally tested functional MVP — preparing for pilot”. Sa carte mène à `/fr/projects/between` ou `/en/projects/between`. Le stade `mvp` distingue le produit fonctionnel testé localement d'un pilote encore à préparer.
+
+Les six rubriques reprennent la présentation, le problème, la solution développée, l'avancement réel, l'impact recherché et les perspectives. Le périmètre décrit comprend la publication par des organisations autorisées, la consultation publique, la pertinence selon des contextes déclarés, les corrections et la distribution contrôlée par email. Le développement Django/PostgreSQL et les tests locaux avec des données de démonstration sont des faits rapportés par Francis. Aucun test de l'application Between ni envoi d'email n'a été exécuté dans le cadre de cette mise à jour du portfolio. Aucune adoption publique, distribution commerciale à grande échelle ou expérimentation déjà menée avec des utilisateurs et organisations réels n'est revendiquée.
+
+Les données publiques de Between sont isolées dans `src/content/between.ts`. Venique reste affiché ; Parcelle pour tous et CODAB restent les deux brouillons exclus du rendu et des routes de détail. Aucun lien de démonstration n'est inventé. Le contact approuvé reste `francismoutima@gmail.com`. Le README et la liste de validation tiennent compte des deux projets et des nouvelles routes.
+
+**Vérifications de cette reprise : réussies.** Le lint (sans erreur ni avertissement), la génération des types Next.js, TypeScript strict, les **26 tests unitaires** et la compilation de production ont réussi. Les exécutables des scripts ont été lancés directement avec Node. Aucune dépendance ni version du verrou npm n'a changé. Les deux fiches Between sont précompilées, comme celles de Venique. Les avertissements connus `metadataBase` et `globalNotFound` restent présents.
+
+Les contrôles Edge/Playwright ont réussi sur les accueils, Venique et Between en FR/EN à 320, 390, 768 et 1440 px, sans débordement horizontal. Les deux cartes, les six rubriques de chaque fiche, les statuts exacts, le sommaire, les ancres, la bascule de langue conservant fiche et ancre, le retour aux projets, l'accès au contact, le lien d'évitement et le clavier fonctionnent. Le menu d'accueil a également été vérifié en paysage 568 × 320 px. Les images de partage propres à Between répondent en PNG ; les captures de la carte, de la fiche ordinateur/mobile et de l'image Open Graph ont été inspectées.
+
+Parcelle pour tous et CODAB restent absents du rendu et leurs routes renvoient 404, comme les projets inconnus et les images de brouillons. Le sitemap reste vide par défaut ; un test vérifie qu'une activation explicite du référencement ne retient que les six pages approuvées (accueils, Venique et Between dans les deux langues). Aucune erreur JavaScript bloquante ni ressource manquante inattendue n'a été relevée. Une revue indépendante du diff n'a identifié aucun défaut concret. Les résultats et captures sont conservés localement dans `artifacts/`, ignoré par Git ; aucun test sur appareil physique n'est revendiqué.
+
+Cette mise à jour prépare une relecture locale et n'autorise aucun déploiement public ni fusion.
+
 ## Avertissements et limites connus
 
 - Sans `SITE_URL`, Next.js signale l'absence de `metadataBase` et utilise localhost pour résoudre les images de partage locales. Configurer l'origine HTTPS réelle avant la publication, puis reconstruire. Le site reste `noindex` tant que le lancement n'est pas autorisé.
@@ -76,6 +92,6 @@ Cette mise à jour prépare une relecture locale et n'autorise aucun déploiemen
 
 ## Avant publication
 
-Valider ensemble l'apparence et les textes FR/EN, dont le rendu de la fiche Venique fournie par Francis. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts des autres projets avant de les afficher ; ces trois brouillons peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
+Valider ensemble l'apparence et les textes FR/EN, dont le rendu des fiches Venique et Between fournies par Francis. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts de Parcelle pour tous et CODAB avant de les afficher ; ces deux brouillons peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
 
 La procédure locale et les étapes futures Vercel sont dans [README.md](../README.md). La liste de validation est dans [VALIDATION_AVANT_PUBLICATION.md](VALIDATION_AVANT_PUBLICATION.md). Aucune publication, fusion ou activation des déploiements automatiques n'a été effectuée.

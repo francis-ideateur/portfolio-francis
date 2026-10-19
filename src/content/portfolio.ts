@@ -1,7 +1,8 @@
 import { venique } from "./venique";
+import { between } from "./between";
 
 /**
- * Public copy is sourced from docs/CONTENU_INITIAL.md.
+ * Public copy comes from docs/CONTENU_INITIAL.md and the owner's approved additions.
  * Keep unconfirmed project information out of the rendered page.
  * Both language versions must be complete before publishing a project.
  */
@@ -297,6 +298,7 @@ export const projectStages = [
   "exploration",
   "design",
   "development",
+  "mvp",
   "pilot",
   "completed",
   "paused",
@@ -314,6 +316,7 @@ export const projectStageLabels: Record<
     exploration: "Exploration",
     design: "En conception",
     development: "En développement",
+    mvp: "MVP fonctionnel testé localement",
     pilot: "Pilote",
     completed: "Réalisé",
     paused: "En pause",
@@ -324,6 +327,7 @@ export const projectStageLabels: Record<
     exploration: "Exploration",
     design: "In design",
     development: "In development",
+    mvp: "Locally tested functional MVP",
     pilot: "Pilot",
     completed: "Completed",
     paused: "On hold",
@@ -396,13 +400,7 @@ export type PublishedProject = ProjectTranslation & {
 /** Names are already in the repository documentation. No private detail belongs here. */
 export const projects: readonly Project[] = [
   venique,
-  {
-    id: "between",
-    internalName: "Between",
-    published: false,
-    stage: null,
-    translations: {},
-  },
+  between,
   {
     id: "parcelle-pour-tous",
     internalName: "Parcelle pour tous",

@@ -2,7 +2,7 @@
 
 Première version du portfolio personnel et entrepreneurial de Francis : présentation, manifeste, projets, parcours et collaboration, en français et en anglais. Direction « Premium & International », bleu nuit, or champagne et ivoire, avec Manrope et Inter hébergées par l'application.
 
-**Version à valider localement. Aucune publication publique du site n'est autorisée à ce stade.** Francis a autorisé l'affichage de son email `francismoutima@gmail.com` et fourni les contenus publics FR/EN de **Venique**, désormais présentés avec le statut « En développement — modules fonctionnels testés localement ». Les trois autres initiatives restent des brouillons ; les validations restantes sont dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
+**Version à valider localement. Aucune publication publique du site n'est autorisée à ce stade.** Francis a autorisé l'affichage de son email `francismoutima@gmail.com` et fourni les contenus publics FR/EN de **Venique** et **Between**, désormais présentés avec leurs statuts réels. Parcelle pour tous et CODAB restent des brouillons ; les validations restantes sont dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
 
 Le [compte rendu de livraison V1](docs/LIVRAISON_V1.md) détaille les tests exécutés, les vérifications navigateur et les avertissements connus.
 
@@ -15,7 +15,7 @@ npm ci
 npm run dev
 ```
 
-Ouvrir [http://127.0.0.1:3000](http://127.0.0.1:3000). La racine redirige vers `/fr` ; `/en` donne accès à la version anglaise. La fiche Venique est accessible depuis les projets ou directement sur `/fr/projects/venique` et `/en/projects/venique`. Les commandes de développement et de prévisualisation écoutent uniquement l'ordinateur local. Arrêter le serveur avec `Ctrl+C`.
+Ouvrir [http://127.0.0.1:3000](http://127.0.0.1:3000). La racine redirige vers `/fr` ; `/en` donne accès à la version anglaise. Les fiches sont accessibles depuis les projets ou directement sur `/fr/projects/venique`, `/en/projects/venique`, `/fr/projects/between` et `/en/projects/between`. Les commandes de développement et de prévisualisation écoutent uniquement l'ordinateur local. Arrêter le serveur avec `Ctrl+C`.
 
 L'installation requiert un accès au registre npm. Aucune clé API ni variable d'environnement n'est nécessaire pour consulter la version locale.
 
@@ -41,7 +41,7 @@ npm start
 
 Exécuter `npm start` après un build réussi, avec le serveur de développement arrêté pour libérer le port 3000. Ces commandes sont une procédure reproductible ; leurs résultats effectifs doivent être consignés dans le compte rendu de livraison.
 
-Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et des deux fiches Venique à 320 px et sur ordinateur : menu mobile, navigation clavier, focus visible, ancres, changement de langue, accès aux détails et retour au portfolio, absence de débordement et de lien inerte.
+Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et des fiches Venique et Between dans les deux langues à 320 px et sur ordinateur : menu mobile, navigation clavier, focus visible, ancres, changement de langue, accès aux détails et retour au portfolio, absence de débordement et de lien inerte.
 
 ## Architecture
 
@@ -50,6 +50,7 @@ Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et 
 - `src/components/` : composants de présentation et navigation réutilisables.
 - `src/content/portfolio.ts` : textes FR/EN et données éditoriales typées.
 - `src/content/venique.ts` : contenu public approuvé de Venique en français et en anglais.
+- `src/content/between.ts` : contenu public approuvé de Between en français et en anglais.
 - `src/lib/` : règles de configuration du site et du référencement.
 - `docs/` : cahier des charges, identité visuelle, contenu source et validations.
 - `vercel.json` : framework Next.js et désactivation des déploiements Git automatiques.
@@ -60,9 +61,11 @@ La V1 utilise des données locales au dépôt, sans base de données, CMS, authe
 
 Lire [AGENTS.md](AGENTS.md) et [CONTENU_INITIAL.md](docs/CONTENU_INITIAL.md) avant toute modification. Mettre à jour les deux langues dans `src/content/portfolio.ts` ; le typage commun aide à conserver les mêmes éléments en français et en anglais.
 
-Les initiatives Between, Parcelle pour tous et CODAB restent des brouillons : `published: false`, statut `stage: null` tant qu'il n'est pas confirmé. Pour publier une fiche, obtenir l'accord de Francis sur son titre, son statut réel, son résumé et sa problématique FR/EN, son périmètre public et ses éventuels liens. Renseigner seulement ces informations validées, puis activer `published`. Le filtre exclut les fiches sans statut reconnu ou sans traduction complète.
+Les initiatives Parcelle pour tous et CODAB restent des brouillons : `published: false`, statut `stage: null` tant qu'il n'est pas confirmé. Pour publier une fiche, obtenir l'accord de Francis sur son titre, son statut réel, son résumé et sa problématique FR/EN, son périmètre public et ses éventuels liens. Renseigner seulement ces informations validées, puis activer `published`. Le filtre exclut les fiches sans statut reconnu ou sans traduction complète.
 
 Venique est le premier projet dont le contenu public a été fourni par Francis : `published: true`, `stage: "development"`. Sa carte mène à une fiche détaillée dans chaque langue. Les textes de `src/content/venique.ts` décrivent une application de gestion scolaire en développement, destinée d'abord à la République du Congo, avec des modules Django/PostgreSQL et des importations Excel de classes et de matières testés localement. Ces informations proviennent de Francis ; les tests de ce dépôt vérifient le portfolio, pas l'application Venique. Aucun déploiement commercial, établissement utilisateur, partenariat ou pilote déjà réalisé n'est revendiqué. L'accès aux détails reste soumis aux règles de publication : conserver les deux traductions complètes et ne pas rendre un brouillon accessible par son URL.
+
+Between dispose également de contenus publics fournis par Francis : `published: true`, `stage: "mvp"`, avec le statut exact « MVP fonctionnel testé localement — préparation du pilote » / “Locally tested functional MVP — preparing for pilot”. Les textes de `src/content/between.ts` présentent une plateforme CivicTech d'information locale, destinée d'abord à la République du Congo, avec publication par des organisations autorisées, consultation publique, pertinence selon les contextes déclarés, corrections et distribution contrôlée par email. Francis rapporte un MVP Django/PostgreSQL testé localement avec des données de démonstration. Le pilote avec des utilisateurs et organisations réels reste une prochaine étape ; aucune adoption publique ni distribution commerciale à grande échelle n'est revendiquée. Les tests de ce dépôt ne vérifient pas l'application Between et n'envoient aucun email. Aucun lien de démonstration n'a été fourni.
 
 Les contacts du tableau `contacts` doivent être explicitement approuvés avant d'être affichés. Renseigner `id`, `kind` (`email`, `linkedin` ou `whatsapp`), `label.fr`, `label.en` et `href`, puis définir `approved: true` après accord. Les destinations acceptées sont un email `mailto:`, un profil HTTPS LinkedIn `/in/…` ou un lien HTTPS `wa.me/…` avec numéro international. Tant qu'aucun contact n'est approuvé, la section collaboration affiche un message informatif ; elle n'envoie aucun message et ne présente aucune coordonnée inventée.
 
@@ -92,7 +95,7 @@ Par défaut, les pages demandent `noindex, nofollow`, `robots.txt` interdit l'ex
 3. Sélectionner **Next.js**, la racine du dépôt (`./`), Node.js **22.x**, `npm ci` pour l'installation et `npm run build` pour la compilation. Conserver la sortie détectée par Next.js. Vérifier que la branche de production est `main`. [Configuration du build](https://vercel.com/docs/builds/configure-a-build).
 4. Pour la première publication autorisée, garder `ALLOW_INDEXING=false`. Si l'origine définitive n'est pas encore connue, laisser `SITE_URL` vide. Cliquer sur **Deploy** déclenche la mise en ligne ; ne le faire qu'après accord explicite.
 5. Relever l'URL HTTPS réellement attribuée, ou configurer le domaine approuvé, puis vérifier le site et les contacts sur mobile et ordinateur. Dans **Settings → Environment Variables**, définir `SITE_URL` avec cette origine. Après validation du lancement, définir `ALLOW_INDEXING=true` pour **Production uniquement**, puis redéployer. Conserver `false` pour Preview et Development. [Variables Vercel par environnement](https://vercel.com/docs/environment-variables).
-6. Vérifier `/fr`, `/en`, `/fr/projects/venique`, `/en/projects/venique`, la redirection de `/`, les métadonnées traduites, les URLs canoniques, `robots.txt` et `sitemap.xml` sur l'URL effective. Préparer le QR code seulement après cette vérification.
+6. Vérifier `/fr`, `/en`, `/fr/projects/venique`, `/en/projects/venique`, `/fr/projects/between`, `/en/projects/between`, la redirection de `/`, les métadonnées traduites, les URLs canoniques, `robots.txt` et `sitemap.xml` sur l'URL effective. Préparer le QR code seulement après cette vérification.
 
 Les déploiements Git peuvent rester désactivés pour une publication manuelle maîtrisée. Si Francis autorise ensuite les publications automatiques, remplacer la valeur `false` de `git.deploymentEnabled` par `true` dans `vercel.json`, faire relire ce changement et le fusionner. Les pushes sur la branche de production pourront alors publier automatiquement ; les autres branches pourront créer des prévisualisations. Ne pas activer cette option pendant la validation initiale.
 
