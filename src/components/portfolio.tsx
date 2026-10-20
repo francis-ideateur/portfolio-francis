@@ -7,6 +7,8 @@ import {
 } from "@/content/portfolio";
 import { Header } from "./header";
 import Link from "next/link";
+import Image from "next/image";
+import portrait from "../../public/images/francis-portrait.png";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
@@ -31,42 +33,6 @@ function SectionLabel({
   );
 }
 
-function Monogram() {
-  return (
-    <div className="monogram-art" aria-hidden="true">
-      <svg viewBox="0 0 500 520" fill="none" className="orbital-art">
-        <circle cx="250" cy="250" r="192" />
-        <circle cx="250" cy="250" r="155" />
-        <ellipse
-          cx="250"
-          cy="250"
-          rx="100"
-          ry="192"
-          transform="rotate(35 250 250)"
-        />
-        <ellipse
-          cx="250"
-          cy="250"
-          rx="100"
-          ry="192"
-          transform="rotate(-35 250 250)"
-        />
-        <path
-          d="M58 250H442M250 58V442M114 114L386 386M114 386L386 114"
-          className="orbital-axis"
-        />
-        <circle cx="250" cy="58" r="5" className="orbital-dot" />
-        <circle cx="386" cy="386" r="5" className="orbital-dot" />
-        <path d="M29 75V29H75M425 29H471V75M29 425V471H75M425 471H471V425" />
-      </svg>
-      <span className="art-initials">
-        MOF<span>.</span>
-      </span>
-      <span className="art-caption">MOUTIMA OKA FRANCIS</span>
-    </div>
-  );
-}
-
 export function Portfolio({ locale }: { locale: Locale }) {
   const c = content[locale];
   const projects = getPublishedProjects(locale);
@@ -81,7 +47,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
       <main id="main" tabIndex={-1}>
         <section className="hero" aria-labelledby="hero-title" id="top">
           <div className="shell hero-grid">
-            <div className="hero-copy">
+            <div className="hero-identity">
               <p className="eyebrow hero-eyebrow">
                 <span className="gold-line" />
                 {c.hero.eyebrow}
@@ -92,6 +58,16 @@ export function Portfolio({ locale }: { locale: Locale }) {
                   Francis<span className="gold">.</span>
                 </span>
               </h1>
+            </div>
+            <div className="hero-portrait">
+              <Image
+                src={portrait}
+                alt={c.hero.portraitAlt}
+                preload
+                sizes="(max-width: 340px) calc(100vw - 40px), (max-width: 680px) 300px, (max-width: 900px) 40vw, (max-width: 1296px) 43vw, 490px"
+              />
+            </div>
+            <div className="hero-copy">
               <p className="hero-headline">{c.hero.headline}</p>
               <p className="hero-positioning">{c.hero.positioning}</p>
               <div className="hero-buttons flex flex-wrap gap-3">
@@ -105,7 +81,6 @@ export function Portfolio({ locale }: { locale: Locale }) {
                 </a>
               </div>
             </div>
-            <Monogram />
           </div>
           <div className="shell hero-bottom">
             <p>
@@ -272,9 +247,16 @@ export function Portfolio({ locale }: { locale: Locale }) {
             <div>
               <SectionLabel number="05">{c.contact.eyebrow}</SectionLabel>
               <h2 id="contact-title">{c.contact.title}</h2>
-              <p className="contact-intro">{c.contact.intro}</p>
+              <div className="contact-copy">
+                {c.contact.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </div>
             <div className="contact-panel">
+              <p className="contact-invitation">
+                <strong>{c.contact.invitation}</strong>
+              </p>
               {contacts.length > 0 ? (
                 <div className="contact-links">
                   {contacts.map((contact) => (

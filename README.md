@@ -2,7 +2,7 @@
 
 Première version du portfolio personnel et entrepreneurial de Francis : présentation, manifeste, projets, parcours et collaboration, en français et en anglais. Direction « Premium & International », bleu nuit, or champagne et ivoire, avec Manrope et Inter hébergées par l'application.
 
-**Version à valider localement. Aucune publication publique du site n'est autorisée à ce stade.** Francis a autorisé l'affichage de son email `francismoutima@gmail.com` et fourni les contenus publics FR/EN de **Venique** et **Between**, désormais présentés avec leurs statuts réels. Parcelle pour tous et CODAB restent des brouillons ; les validations restantes sont dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
+**Version à valider localement. Aucune publication publique du site n'est autorisée à ce stade.** Francis a autorisé l'affichage de son email `francismoutima@gmail.com` et fourni les contenus publics FR/EN de **Venique** et **Between**, désormais présentés avec leurs statuts réels. Le 20 octobre 2026, il a fourni et approuvé le portrait officiel ainsi que les nouveaux textes de collaboration FR/EN. Parcelle pour tous et CODAB restent des brouillons ; les validations restantes sont dans [VALIDATION_AVANT_PUBLICATION.md](docs/VALIDATION_AVANT_PUBLICATION.md).
 
 Le [compte rendu de livraison V1](docs/LIVRAISON_V1.md) détaille les tests exécutés, les vérifications navigateur et les avertissements connus.
 
@@ -41,7 +41,7 @@ npm start
 
 Exécuter `npm start` après un build réussi, avec le serveur de développement arrêté pour libérer le port 3000. Ces commandes sont une procédure reproductible ; leurs résultats effectifs doivent être consignés dans le compte rendu de livraison.
 
-Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et des fiches Venique et Between dans les deux langues à 320 px et sur ordinateur : menu mobile, navigation clavier, focus visible, ancres, changement de langue, accès aux détails et retour au portfolio, absence de débordement et de lien inerte.
+Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et des fiches Venique et Between dans les deux langues à 320 px et sur ordinateur : chargement et cadrage du portrait, textes de collaboration, menu mobile, navigation clavier, focus visible, ancres, changement de langue, accès aux détails et retour au portfolio, absence de débordement et de lien inerte.
 
 ## Architecture
 
@@ -51,11 +51,14 @@ Compléter les contrôles automatiques par une vérification de `/fr`, `/en` et 
 - `src/content/portfolio.ts` : textes FR/EN et données éditoriales typées.
 - `src/content/venique.ts` : contenu public approuvé de Venique en français et en anglais.
 - `src/content/between.ts` : contenu public approuvé de Between en français et en anglais.
+- `public/images/francis-portrait.png` : portrait officiel fourni et approuvé par Francis.
 - `src/lib/` : règles de configuration du site et du référencement.
 - `docs/` : cahier des charges, identité visuelle, contenu source et validations.
 - `vercel.json` : framework Next.js et désactivation des déploiements Git automatiques.
 
-La V1 utilise des données locales au dépôt, sans base de données, CMS, authentification, paiement ou serveur d'email. Le monogramme temporaire remplace une photographie personnelle non fournie.
+La V1 utilise des données locales au dépôt, sans base de données, CMS, authentification, paiement ou serveur d'email. Le portrait fourni par Francis est l'élément visuel principal du hero dans les deux langues ; le monogramme MOF reste dans l'en-tête et le pied de page.
+
+L'image source « Avatar élégant en costume bleu nuit.png » est conservée à l'identique dans `public/images/francis-portrait.png` (PNG, 1254 × 1254 px, 2 126 274 octets). Aucune nouvelle génération ni retouche n'a été effectuée. Son import statique avec `next/image` permet de servir des tailles et formats optimisés selon l'écran, avec un cadrage responsive et un texte alternatif traduit.
 
 ## Modifier les contenus
 
@@ -70,6 +73,8 @@ Between dispose également de contenus publics fournis par Francis : `published:
 Les contacts du tableau `contacts` doivent être explicitement approuvés avant d'être affichés. Renseigner `id`, `kind` (`email`, `linkedin` ou `whatsapp`), `label.fr`, `label.en` et `href`, puis définir `approved: true` après accord. Les destinations acceptées sont un email `mailto:`, un profil HTTPS LinkedIn `/in/…` ou un lien HTTPS `wa.me/…` avec numéro international. Tant qu'aucun contact n'est approuvé, la section collaboration affiche un message informatif ; elle n'envoie aucun message et ne présente aucune coordonnée inventée.
 
 Le contact actuellement approuvé est `francismoutima@gmail.com`, avec la destination `mailto:francismoutima@gmail.com` et des libellés FR/EN. Ce lien permet de préparer un email dans l'application de messagerie du visiteur ; le site n'envoie aucun message lui-même.
+
+Les textes de collaboration fournis par Francis le 20 octobre 2026 sont conservés dans les deux langues : un titre, trois paragraphes et une invitation finale. Ils précisent les échanges recherchés autour de Venique et Between, sans annoncer de partenariat déjà conclu.
 
 Le manifeste affiche uniquement l'introduction disponible. La version longue, les diplômes, dates, postes, réalisations, métriques et témoignages attendent leurs validations. Un brouillon masqué sur le site n'est pas confidentiel s'il est enregistré dans ce dépôt public : ne jamais y ajouter de notes sensibles ou de coordonnées privées.
 

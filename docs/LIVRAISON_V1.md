@@ -83,6 +83,22 @@ Parcelle pour tous et CODAB restent absents du rendu et leurs routes renvoient 4
 
 Cette mise à jour prépare une relecture locale et n'autorise aucun déploiement public ni fusion.
 
+## Suivi — Portrait et collaboration — 20 octobre 2026
+
+Francis a fourni l'image « Avatar élégant en costume bleu nuit.png » et explicitement demandé son utilisation comme photo officielle du portfolio. Le fichier est conservé à l'identique dans `public/images/francis-portrait.png` (PNG, 1254 × 1254 px, 2 126 274 octets), sans nouvelle génération ni retouche. Le hero FR/EN utilise ce portrait comme présence visuelle principale, avec un texte alternatif traduit. Le monogramme MOF reste dans l'en-tête et le pied de page. L'import statique avec `next/image` permet la génération de tailles et formats adaptés à l'écran ; le cadrage est responsive.
+
+La section collaboration reprend les nouveaux textes fournis par Francis dans les deux langues : « Les idées avancent aussi par la rencontre. » / “Ideas also grow through connection.”, trois paragraphes et une invitation finale. Les textes explicitent les échanges recherchés avec des entrepreneurs, établissements, organisations et partenaires autour de l'éducation numérique, de l'information locale et de l'expérimentation. Le contact approuvé reste `francismoutima@gmail.com`. Aucun partenariat existant n'est ajouté au récit.
+
+**Vérifications de cette reprise : réussies.** Le lint (sans erreur ni avertissement), la génération des types Next.js, TypeScript strict, les **26 tests unitaires** et la compilation de production ont réussi. Les exécutables des scripts ont été lancés directement avec Node. Aucune dépendance ni version du verrou npm n'a changé. Les avertissements connus `metadataBase` et `globalNotFound` restent présents.
+
+Les contrôles Edge/Playwright du portrait et de la collaboration passent en FR/EN à 320, 390, 680, 681, 768 et 1440 px : aucun débordement horizontal, portrait carré sans déformation, position à côté du texte sur ordinateur et entre l'identité et l'introduction sur mobile. Les trois paragraphes, les titres et les invitations sont strictement comparés aux textes fournis ; le contact conserve sa destination exacte. Le texte alternatif change avec la langue, le portrait est préchargé et ses dimensions sont réservées. Les images optimisées répondent en WebP : **22 684 octets à 640 px** pour le mobile et **53 718 octets à 1080 px** pour l'ordinateur, mesurés avec un ratio de pixels de 2. L'original de 2 126 274 octets reste inchangé (égalité SHA-256 vérifiée).
+
+Les contrôles généraux de navigation, ancres, menu mobile, Échap, focus clavier, bascule de langue et lien d'évitement passent, y compris le menu paysage 568 × 320 px. Les deux projets approuvés restent visibles, les brouillons absents, l'indexation désactivée et les images Open Graph disponibles. Aucune erreur JavaScript ni ressource manquante inattendue sur les accueils ; les routes volontairement absentes renvoient les réponses 404 attendues.
+
+Nouvelles captures produites et inspectées dans `artifacts/` : `fr-home-mobile.png` (viewport 390 × 900 px), `fr-home-desktop.png`, les équivalents EN et les captures `fr-collaboration-*` / `en-collaboration-*`. Les contrôles sont conservés dans `portrait-results.json` et `browser-results.json` du même dossier local ignoré. Une revue indépendante n'a identifié aucun défaut concret. Ces vérifications dans un navigateur de bureau avec différentes tailles d'écran ne constituent pas un test sur smartphone physique ni une mesure complète des Core Web Vitals.
+
+L'autorisation d'intégrer le portrait et les textes est acquise. La relecture de leur rendu final précède la décision de publication ; aucun déploiement public ni fusion n'est autorisé par cette mise à jour.
+
 ## Avertissements et limites connus
 
 - Sans `SITE_URL`, Next.js signale l'absence de `metadataBase` et utilise localhost pour résoudre les images de partage locales. Configurer l'origine HTTPS réelle avant la publication, puis reconstruire. Le site reste `noindex` tant que le lancement n'est pas autorisé.
@@ -92,6 +108,6 @@ Cette mise à jour prépare une relecture locale et n'autorise aucun déploiemen
 
 ## Avant publication
 
-Valider ensemble l'apparence et les textes FR/EN, dont le rendu des fiches Venique et Between fournies par Francis. Vérifier le lien vers l'email désormais approuvé avant lancement. Confirmer les descriptions et statuts de Parcelle pour tous et CODAB avant de les afficher ; ces deux brouillons peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, les éventuelles photos et l'URL finale.
+Valider ensemble l'apparence et les textes FR/EN, dont le hero avec portrait, la collaboration et le rendu des fiches Venique et Between fournis par Francis. Vérifier le lien vers l'email déjà approuvé avant lancement. Confirmer les descriptions et statuts de Parcelle pour tous et CODAB avant de les afficher ; ces deux brouillons peuvent rester masqués pendant ce travail. Valider tout nouveau fait de parcours, la version longue du manifeste, toute autre photo et l'URL finale.
 
 La procédure locale et les étapes futures Vercel sont dans [README.md](../README.md). La liste de validation est dans [VALIDATION_AVANT_PUBLICATION.md](VALIDATION_AVANT_PUBLICATION.md). Aucune publication, fusion ou activation des déploiements automatiques n'a été effectuée.

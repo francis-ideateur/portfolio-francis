@@ -38,6 +38,7 @@ export type PortfolioContent = {
     motto: string;
     location: string;
     evolving: string;
+    portraitAlt: string;
   };
   about: { eyebrow: string; title: string; body: string };
   manifesto: { eyebrow: string; title: string; quote: string; note: string };
@@ -58,7 +59,8 @@ export type PortfolioContent = {
   contact: {
     eyebrow: string;
     title: string;
-    intro: string;
+    paragraphs: string[];
+    invitation: string;
     emptyTitle: string;
     emptyBody: string;
   };
@@ -94,6 +96,7 @@ export const content: Record<Locale, PortfolioContent> = {
       motto: "La réussite est possible à celui qui tente.",
       location: "République du Congo · Ouvert sur le monde",
       evolving: "Un portfolio qui évolue avec mon parcours",
+      portraitAlt: "Portrait de MOUTIMA OKA Francis en costume bleu nuit",
     },
     about: {
       eyebrow: "À propos",
@@ -162,8 +165,12 @@ export const content: Record<Locale, PortfolioContent> = {
     contact: {
       eyebrow: "Collaborer",
       title: "Les idées avancent aussi par la rencontre.",
-      intro:
-        "Vous travaillez sur une problématique concrète, un projet entrepreneurial ou une initiative de développement ? Je suis ouvert aux échanges constructifs, aux collaborations et au mentorat.",
+      paragraphs: [
+        "Je suis ouvert aux échanges avec des entrepreneurs, des établissements scolaires, des organisations, des acteurs de l’innovation et des partenaires qui partagent l’ambition de développer des solutions utiles.",
+        "À travers Venique et Between, je souhaite notamment rencontrer des personnes et des structures intéressées par l’éducation numérique, l’accès à l’information locale et l’expérimentation de nouvelles solutions.",
+        "Que vous souhaitiez partager une expertise, proposer un accompagnement, explorer un partenariat technique ou discuter d’un projet, je serais heureux d’échanger avec vous.",
+      ],
+      invitation: "Parlons de ce que nous pourrions construire ensemble.",
       emptyTitle: "Coordonnées à venir",
       emptyBody:
         "Mes coordonnées publiques seront ajoutées après confirmation. Elles ne sont pas encore disponibles sur ce portfolio.",
@@ -206,6 +213,7 @@ export const content: Record<Locale, PortfolioContent> = {
       motto: "Success is possible for those who dare to try.",
       location: "Republic of the Congo · Open to the world",
       evolving: "A portfolio that grows with my journey",
+      portraitAlt: "Portrait of MOUTIMA OKA Francis in a navy suit",
     },
     about: {
       eyebrow: "About me",
@@ -273,9 +281,13 @@ export const content: Record<Locale, PortfolioContent> = {
     },
     contact: {
       eyebrow: "Collaborate",
-      title: "Ideas also grow through conversation.",
-      intro:
-        "Working on a real-world challenge, an entrepreneurial project, or a development initiative? I welcome thoughtful conversations, potential collaborations, and mentorship opportunities.",
+      title: "Ideas also grow through connection.",
+      paragraphs: [
+        "I welcome conversations with entrepreneurs, educational institutions, organizations, innovation professionals, and potential partners who share an interest in developing practical solutions.",
+        "Through Venique and Between, I am particularly interested in connecting with people and organizations working in digital education, access to local information, and the testing of emerging solutions.",
+        "Whether you would like to share expertise, offer mentorship, explore a technical partnership, or discuss a project, I would be glad to connect.",
+      ],
+      invitation: "Let’s explore what we could build together.",
       emptyTitle: "Contact details to come",
       emptyBody:
         "My public contact details will be added once confirmed. They are not yet available on this portfolio.",

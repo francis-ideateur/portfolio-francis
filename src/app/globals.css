@@ -261,11 +261,20 @@ p {
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  align-items: center;
-  gap: 38px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-areas: "identity portrait" "message portrait";
+  align-content: center;
+  column-gap: 38px;
   padding-block: 82px 72px;
   min-height: 650px;
+}
+.hero-identity {
+  grid-area: identity;
+  align-self: end;
+}
+.hero-copy {
+  grid-area: message;
+  align-self: start;
 }
 .hero-eyebrow {
   color: var(--color-champagne);
@@ -351,56 +360,24 @@ p {
   line-height: 1;
   font-weight: 400;
 }
-.monogram-art {
-  position: relative;
+.hero-portrait {
+  grid-area: portrait;
   width: 100%;
   max-width: 490px;
   aspect-ratio: 1;
+  align-self: center;
   justify-self: end;
+  overflow: hidden;
+  border: 1px solid #c5a46d60;
+  border-radius: 12px;
+  background: #14243a;
 }
-.orbital-art {
+.hero-portrait img {
+  display: block;
   width: 100%;
   height: 100%;
-  stroke: #c5a46d;
-  stroke-opacity: 0.36;
-  stroke-width: 0.8;
-}
-.orbital-axis {
-  stroke-opacity: 0.15;
-  stroke-dasharray: 3 6;
-}
-.orbital-dot {
-  fill: #c5a46d;
-  stroke: none;
-}
-.art-initials {
-  position: absolute;
-  top: 44%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-heading);
-  font-size: clamp(3rem, 7.5vw, 6rem);
-  font-weight: 300;
-  letter-spacing: -0.08em;
-  color: #e7dfcf;
-  text-shadow:
-    0 0 30px #0b1426,
-    0 0 20px #0b1426;
-}
-.art-initials > span {
-  color: var(--color-champagne);
-}
-.art-caption {
-  position: absolute;
-  top: 61%;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-size: 0.48rem;
-  letter-spacing: 0.25em;
-  color: var(--color-champagne);
-  padding: 8px;
-  background: #0b1426b0;
+  object-fit: cover;
+  object-position: center;
 }
 .hero-bottom {
   display: flex;
@@ -823,8 +800,8 @@ blockquote > footer {
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 120px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 80px;
   align-items: center;
 }
 .contact-section .section-label {
@@ -834,11 +811,14 @@ blockquote > footer {
   font-size: clamp(2.3rem, 4vw, 3.8rem);
   max-width: 600px;
 }
-.contact-intro {
+.contact-copy {
   color: var(--muted);
   margin-top: 28px;
-  font-size: 0.88rem;
-  max-width: 510px;
+  font-size: 0.95rem;
+  max-width: 620px;
+}
+.contact-copy p + p {
+  margin-top: 20px;
 }
 .contact-panel {
   border: 1px solid #334056;
@@ -860,6 +840,17 @@ blockquote > footer {
   color: var(--muted);
   font-size: 0.8rem;
   margin-top: 14px;
+}
+.contact-panel .contact-invitation {
+  color: var(--color-ivory);
+  margin: 0 0 24px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+.contact-invitation strong {
+  font-weight: 600;
 }
 .contact-link {
   display: flex;
@@ -934,7 +925,7 @@ blockquote > footer {
   }
   .hero-grid {
     min-height: 600px;
-    gap: 20px;
+    column-gap: 20px;
   }
   .about-grid,
   .contact-grid {
@@ -955,7 +946,7 @@ blockquote > footer {
     height: 76px;
   }
   .hero-grid {
-    grid-template-columns: 1.3fr 1fr;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
     min-height: 570px;
     padding-block: 60px;
   }
@@ -1022,15 +1013,16 @@ blockquote > footer {
   }
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding-block: 52px 28px;
+    grid-template-areas: "identity" "portrait" "message";
+    gap: 24px;
+    padding-block: 32px;
     min-height: auto;
   }
   .hero-eyebrow {
     font-size: 0.56rem;
     letter-spacing: 0.1em;
     gap: 9px;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
   }
   .gold-line {
     width: 20px;
@@ -1043,7 +1035,7 @@ blockquote > footer {
   }
   .hero-headline {
     font-size: 1.25rem;
-    margin-top: 22px;
+    margin-top: 0;
   }
   .hero-positioning {
     font-size: 0.82rem;
@@ -1058,16 +1050,9 @@ blockquote > footer {
     min-height: 48px;
     gap: 16px;
   }
-  .monogram-art {
-    width: min(75%, 310px);
+  .hero-portrait {
+    width: min(100%, 300px);
     justify-self: center;
-    margin-top: 10px;
-  }
-  .art-initials {
-    font-size: 3.9rem;
-  }
-  .art-caption {
-    font-size: 0.38rem;
   }
   .hero-bottom {
     padding-block: 16px;
@@ -1173,8 +1158,8 @@ blockquote > footer {
   .journey-grid h3 {
     margin-bottom: 10px;
   }
-  .contact-intro {
-    font-size: 0.84rem;
+  .contact-copy {
+    font-size: 0.9rem;
   }
   .contact-panel {
     margin-top: 10px;
